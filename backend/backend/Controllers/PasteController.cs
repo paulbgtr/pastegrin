@@ -64,6 +64,7 @@ public class PasteController : ControllerBase
 
         foundPaste.Title = paste.Title;
         foundPaste.Content = paste.Content;
+        foundPaste.Password = paste.Password;
 
         _context.SaveChanges();
 
