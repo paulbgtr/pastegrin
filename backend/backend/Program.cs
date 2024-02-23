@@ -1,12 +1,14 @@
-using Microsoft.EntityFrameworkCore;
 using backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var Configuration = builder.Configuration;
 
 builder.Services.AddControllers();
+
 builder.Services.AddDbContext<ApiContext>(opt =>
-    opt.UseInMemoryDatabase("pastegrin"));
-    
+    opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
