@@ -1,5 +1,9 @@
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 
+mod db;
+mod models;
+mod schema;
+
 #[get("/")]
 async fn welcome() -> impl Responder {
     let response_message = "Welcome to pastegrin auth API!";
