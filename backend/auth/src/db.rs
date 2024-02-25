@@ -1,4 +1,6 @@
 use crate::models::*;
+use crate::schema::users;
+use crate::schema::users::dsl::*;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 use dotenvy::dotenv;
@@ -13,8 +15,6 @@ fn establish_connection() -> PgConnection {
 }
 
 pub fn get_user_by_id(conn: &mut PgConnection, _id: i32) -> User {
-    use crate::schema::users::dsl::*;
-
     let result = users
         .filter(id.eq(_id))
         .select(User::as_select())
@@ -25,8 +25,6 @@ pub fn get_user_by_id(conn: &mut PgConnection, _id: i32) -> User {
 }
 
 pub fn get_user_by_email(conn: &mut PgConnection, _email: &str) -> User {
-    use crate::schema::users::dsl::*;
-
     let result = users
         .filter(email.eq(_email))
         .select(User::as_select())
@@ -37,8 +35,6 @@ pub fn get_user_by_email(conn: &mut PgConnection, _email: &str) -> User {
 }
 
 pub fn create_user(conn: &mut PgConnection, _email: &str, _password: &str) -> User {
-    use crate::schema::users;
-
     let new_user = NewUser {
         email: _email,
         password: _password,
@@ -51,8 +47,6 @@ pub fn create_user(conn: &mut PgConnection, _email: &str, _password: &str) -> Us
 }
 
 pub fn update_user(conn: &mut PgConnection, _id: i32, _email: &str, _password: &str) -> User {
-    use crate::schema::users::dsl::*;
-
     diesel::update(users.find(_id))
         .set((email.eq(_email), password.eq(_password)))
         .get_result(conn)
@@ -60,8 +54,6 @@ pub fn update_user(conn: &mut PgConnection, _id: i32, _email: &str, _password: &
 }
 
 pub fn delete_user(conn: &mut PgConnection, _id: i32) {
-    use crate::schema::users::dsl::*;
-
     diesel::delete(users.find(_id))
         .execute(conn)
         .expect("Error deleting user");
