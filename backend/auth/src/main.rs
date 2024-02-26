@@ -1,5 +1,6 @@
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 
+mod auth;
 mod db;
 mod models;
 mod schema;
@@ -24,6 +25,7 @@ async fn welcome() -> impl Responder {
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
+            .configure(auth::auth_config)
             .service(welcome)
     })
     .bind(("127.0.0.1", 8080))?
