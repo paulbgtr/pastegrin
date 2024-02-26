@@ -5,6 +5,7 @@ use diesel::pg::PgConnection;
 use diesel::prelude::*;
 use dotenvy::dotenv;
 use std::env;
+use std::time::SystemTime;
 
 pub fn establish_connection() -> PgConnection {
     dotenv().ok();
@@ -24,14 +25,14 @@ pub fn get_user_by_id(conn: &mut PgConnection, _id: i32) -> User {
     result.into_iter().next().unwrap()
 }
 
-pub fn get_user_by_email(conn: &mut PgConnection, _email: &str) -> User {
+pub fn get_user_by_email(conn: &mut PgConnection, _email: &str) -> Option<User> {
     let result = users
         .filter(email.eq(_email))
         .select(User::as_select())
         .load(conn)
         .expect("Error loading user");
 
-    result.into_iter().next().unwrap()
+    result.into_iter().next()
 }
 
 pub fn create_user(conn: &mut PgConnection, _email: &str, _password: &str) -> User {
