@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpResponse, Responder};
+use actix_web::{post, web, HttpResponse, Responder, cookie::Cookie};
 use crate::db;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -53,7 +53,13 @@ async fn signin(info: web::Json<UserRequest>) -> impl Responder {
 
     let token = helpers::generate_jwt(user.id);
 
-    HttpResponse::Ok().body(token)
+    let cookie = Cookie::build("token", token)
+        .http_only(true)
+        .finish();
+
+    HttpResponse::Ok()
+        .cookie(cookie)
+        .body("User signed in")
 }
 
 pub fn auth_config(cfg: &mut web::ServiceConfig) {
