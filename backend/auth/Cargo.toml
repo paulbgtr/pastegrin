@@ -11,3 +11,4 @@ actix-web = "4"
 diesel = { version = "2.1.0", features = ["postgres"] }
 dotenvy = "0.15"
 bcrypt = "0.15.0"
+jwt-simple = "0.12.9"
