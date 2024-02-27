@@ -41,6 +41,14 @@ async fn signin(info: web::Json<UserRequest>) -> impl Responder {
         return HttpResponse::NotFound().body("User not found");
     }
 
+    let user = user.unwrap();
+
+    let is_valid_password = verify(password, &user.password).expect("Failed to verify password");
+
+    if !is_valid_password {
+        return HttpResponse::Unauthorized().body("Invalid password");
+    }
+
     HttpResponse::Ok().finish()
 }
 
