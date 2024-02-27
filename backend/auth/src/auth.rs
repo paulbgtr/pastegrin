@@ -3,6 +3,8 @@ use crate::db;
 use serde::Deserialize;
 use std::collections::HashMap;
 use bcrypt::{DEFAULT_COST, hash, verify};
+use jwt_simple::prelude::*;
+use crate::helpers;
 
 #[derive(Deserialize)]
 struct UserRequest {
@@ -49,7 +51,9 @@ async fn signin(info: web::Json<UserRequest>) -> impl Responder {
         return HttpResponse::Unauthorized().body("Invalid password");
     }
 
-    HttpResponse::Ok().finish()
+    let token = helpers::generate_jwt(user.id);
+
+    HttpResponse::Ok().body(token)
 }
 
 pub fn auth_config(cfg: &mut web::ServiceConfig) {
