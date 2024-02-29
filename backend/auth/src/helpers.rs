@@ -13,7 +13,7 @@ pub fn generate_jwt(user_id: i32) -> String {
 
     let additional_data = AdditionalData { user_id };
 
-    let claims = Claims::with_custom_claims(additional_data, Duration::from_days(30));
+    let claims = Claims::with_custom_claims(additional_data, Duration::from_days(1));
 
     let token = key.authenticate(claims).unwrap();
 
