@@ -1,7 +1,6 @@
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 
 mod auth;
-mod middleware;
 mod helpers;
 mod db;
 mod models;
