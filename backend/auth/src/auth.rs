@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpResponse, Responder, cookie::Cookie};
+use actix_web::{post, web, HttpResponse, Responder, cookie::Cookie, cookie::time::Duration};
 use crate::db;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -55,6 +55,7 @@ async fn signin(info: web::Json<UserRequest>) -> impl Responder {
 
     let cookie = Cookie::build("token", token)
         .http_only(true)
+        .max_age(Duration::days(1))
         .finish();
 
     HttpResponse::Ok()
