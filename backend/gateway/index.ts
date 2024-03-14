@@ -7,7 +7,13 @@ const port = 3000;
 app.use(authProxy);
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hello World!" });
+  res.json({
+    message: "Welcome to the pastegrin API",
+    endpoints: {
+      "/auth": "Authentication service",
+      "/pastes": "Pastes service",
+    },
+  });
 });
 
 app.listen(port, () => {
