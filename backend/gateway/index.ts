@@ -1,10 +1,11 @@
 import express from "express";
-import { authProxy } from "./proxy";
+import { authProxy, pastesProxy } from "./proxy";
 
 const app = express();
 const port = 3000;
 
 app.use(authProxy);
+app.use(pastesProxy);
 
 app.get("/", (req, res) => {
   res.json({
