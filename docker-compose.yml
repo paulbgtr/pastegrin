@@ -1,14 +1,22 @@
-version: '3.8'
+version: "3.8"
 services:
+  auth:
+    build: ./backend/auth
+    ports:
+      - "8080:8080"
+  gateway:
+    build: ./backend/gateway
+    ports:
+      - "3000:3000"
   postgres:
     image: postgres:latest
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-    - "5432:5432"
+      - "5432:5432"
     volumes:
-    - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
   postgres-data:
