@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('pastes')
 export class Paste {
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,7 +11,7 @@ export class Paste {
   @Column()
   content: string;
 
-  @Column({ default: false })
+  @Column({ name: 'is_protected', default: false })
   isProtected: boolean;
 
   @Column()
