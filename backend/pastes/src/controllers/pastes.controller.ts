@@ -1,6 +1,7 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { PastesService } from 'src/services/pastes.service';
 import { Paste } from 'src/model/paste.entity';
+import { CreatePasteDto } from 'src/dto/create-paste.dto';
 
 @Controller('pastes')
 export class PastesController {
@@ -14,5 +15,10 @@ export class PastesController {
   @Get(':id')
   findOne(id: number): Promise<Paste | null> {
     return this.pastesService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() createPasteDto: CreatePasteDto): Promise<Paste> {
+    return this.pastesService.create(createPasteDto);
   }
 }
