@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Paste } from 'src/model/paste.entity';
@@ -14,8 +14,12 @@ export class PastesService {
     return this.pastesRepository.find();
   }
 
-  findOne(id: number): Promise<Paste | null> {
-    return this.pastesRepository.findOneBy({ id });
+  async findOne(id: number): Promise<Paste | null> {
+    const foundPaste = await this.pastesRepository.findOneBy({ id });
+
+    if (!foundPaste) throw new HttpException('Paste not found', 404);
+
+    return foundPaste;
   }
 
   async create(paste: Paste): Promise<Paste> {
@@ -23,6 +27,12 @@ export class PastesService {
   }
 
   async remove(id: number): Promise<void> {
+    const pasteExists = await this.pastesRepository.findOneBy({
+      id,
+    });
+
+    if (!pasteExists) throw new HttpException('Paste not found', 404);
+
     await this.pastesRepository.delete(id);
   }
 }
