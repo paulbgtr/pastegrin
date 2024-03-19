@@ -11,9 +11,6 @@ export class Paste {
   @Column()
   content: string;
 
-  @Column({ name: 'is_protected', default: false })
-  isProtected: boolean;
-
   @Column()
   password: string;
 }
