@@ -35,4 +35,14 @@ export class PastesService {
 
     await this.pastesRepository.delete(id);
   }
+
+  async update(id: number, paste: Paste): Promise<void> {
+    const pasteExists = await this.pastesRepository.findOneBy({
+      id,
+    });
+
+    if (!pasteExists) throw new HttpException('Paste not found', 404);
+
+    await this.pastesRepository.update(id, paste);
+  }
 }
