@@ -1,7 +1,11 @@
-import { Button } from "@/components/ui/button";
+import { AddPaste } from "@/rootsComponents/root/AddPaste";
 
 const Root = () => {
-  return <Button>Hello World!</Button>;
+  return (
+    <div className="my-5 mx-auto max-w-5xl">
+      <AddPaste />
+    </div>
+  );
 };
 
 export default Root;
