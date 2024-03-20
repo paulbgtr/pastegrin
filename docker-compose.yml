@@ -1,13 +1,13 @@
 version: "3.8"
 services:
-  auth:
-    build: ./backend/auth
-    ports:
-      - "8080:8080"
-  gateway:
-    build: ./backend/gateway
-    ports:
-      - "3000:3000"
+  # auth:
+  #   build: ./backend/auth
+  #   ports:
+  #     - "8080:8080"
+  # gateway:
+  #   build: ./backend/gateway
+  #   ports:
+  #     - "3000:3000"
   postgres:
     image: postgres:latest
     environment:
