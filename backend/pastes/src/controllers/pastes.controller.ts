@@ -11,31 +11,31 @@ import { PastesService } from 'src/services/pastes.service';
 import { Paste } from 'src/model/paste.entity';
 import { PasteDto } from 'src/dto/paste.dto';
 
-@Controller('pastes')
+@Controller()
 export class PastesController {
   constructor(private readonly pastesService: PastesService) {}
 
-  @Get()
+  @Get('get')
   findAll(): Promise<Paste[]> {
     return this.pastesService.findAll();
   }
 
-  @Get(':id')
+  @Get('get/:id')
   findOne(@Param('id') id: number): Promise<Paste | null> {
     return this.pastesService.findOne(id);
   }
 
-  @Post()
+  @Post('create')
   create(@Body() createPasteDto: PasteDto): Promise<Paste> {
     return this.pastesService.create(createPasteDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   delete(@Param('id') id: number): Promise<void> {
     return this.pastesService.remove(id);
   }
 
-  @Put(':id')
+  @Put('update/:id')
   update(
     @Param('id') id: number,
     @Body() updatePasteDto: PasteDto,
