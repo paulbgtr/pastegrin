@@ -34,7 +34,7 @@ export const AddPaste = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const apiUrl = "http://localhost:3000/pastes/pastes";
+    const apiUrl = "http://localhost:3000/pastes/create";
 
     try {
       const response = await fetch(apiUrl, {

@@ -43,7 +43,7 @@ export const UpdatePaste: React.FC<UpdatePasteProps> = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const apiUrl = `http://localhost:4000/pastes/${id}`;
+    const apiUrl = `http://localhost:3000/pastes/update/${id}`;
 
     try {
       const response = await fetch(apiUrl, {
