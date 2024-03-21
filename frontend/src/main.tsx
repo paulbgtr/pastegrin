@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/pastes/:pasteId",
     loader: async ({ request, params }) => {
-      return fetch(`http://localhost:3000/pastes/pastes/${params.pasteId}`, {
+      return fetch(`http://localhost:3000/pastes/get/${params.pasteId}`, {
         signal: request.signal,
       });
     },
