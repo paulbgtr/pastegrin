@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   content: z.string().min(1, {
@@ -21,6 +22,8 @@ const formSchema = z.object({
 });
 
 export const AddPaste = () => {
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,7 +45,8 @@ export const AddPaste = () => {
         body: JSON.stringify(values),
       });
       const data = await response.json();
-      console.log(data);
+
+      navigate(`/pastes/${data.id}`);
     } catch (error) {
       console.error("Error:", error);
     }
