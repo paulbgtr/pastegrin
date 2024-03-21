@@ -1,9 +1,11 @@
 import express from "express";
 import { authProxy, pastesProxy } from "./proxy";
+const cors = require("cors");
 
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(authProxy);
 app.use(pastesProxy);
 
