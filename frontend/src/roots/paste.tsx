@@ -13,7 +13,7 @@ const Paste = () => {
 
   if (!content) throw new Error("Paste not found");
 
-  if (password !== "") return <VerifyPaste />;
+  if (password !== "") return <VerifyPaste id={id} />;
 
   return (
     <UpdatePaste id={id} content={content} title={title} password={password} />
