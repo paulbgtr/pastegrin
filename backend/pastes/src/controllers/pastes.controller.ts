@@ -10,6 +10,7 @@ import {
 import { PastesService } from 'src/services/pastes.service';
 import { Paste } from 'src/model/paste.entity';
 import { PasteDto } from 'src/dto/paste.dto';
+import { VerifyPasteDto } from 'src/dto/verify-paste-dto';
 
 @Controller()
 export class PastesController {
@@ -41,5 +42,13 @@ export class PastesController {
     @Body() updatePasteDto: PasteDto,
   ): Promise<void> {
     return this.pastesService.update(id, updatePasteDto);
+  }
+
+  @Post('verify/:id')
+  verify(
+    @Param('id') id: number,
+    @Body() verifyPasteDto: VerifyPasteDto,
+  ): Promise<boolean> {
+    return this.pastesService.verify(id, verifyPasteDto.password);
   }
 }
