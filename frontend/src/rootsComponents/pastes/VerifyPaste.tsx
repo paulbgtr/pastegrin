@@ -19,7 +19,13 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export function VerifyPaste({ id }: { id: number }) {
+export function VerifyPaste({
+  id,
+  onVerifySuccess,
+}: {
+  id: number;
+  onVerifySuccess: () => void;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,8 +44,9 @@ export function VerifyPaste({ id }: { id: number }) {
         },
         body: JSON.stringify(values),
       });
-      const data = await response.json();
-      console.log(data);
+      if (response.ok) {
+        onVerifySuccess();
+      }
     } catch (error) {
       console.error("Error:", error);
     }
