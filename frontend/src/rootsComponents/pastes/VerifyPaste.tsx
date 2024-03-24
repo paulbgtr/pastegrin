@@ -19,7 +19,7 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export function VerifyPaste() {
+export function VerifyPaste({ id }: { id: number }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,9 +27,23 @@ export function VerifyPaste() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // todo: verify the password by accessing a specific verify endpoint
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const apiUrl = `http://localhost:3000/pastes/verify/${id}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -41,7 +55,7 @@ export function VerifyPaste() {
             <FormItem>
               <FormLabel>Paste's password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="shadcn" {...field} />
+                <Input type="password" placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
