@@ -45,4 +45,15 @@ export class PastesService {
 
     await this.pastesRepository.update(id, paste);
   }
+
+  async verify(id: number, password: string): Promise<boolean> {
+    const paste = await this.pastesRepository.findOneBy({ id });
+
+    if (!paste) throw new HttpException('Paste not found', 404);
+
+    if (paste.password !== password)
+      throw new HttpException('Invalid password', 400);
+
+    return true;
+  }
 }
