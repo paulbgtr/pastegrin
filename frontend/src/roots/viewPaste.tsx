@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { UpdatePaste } from "@/rootsComponents/pastes/UpdatePaste";
-import { VerifyPaste } from "@/rootsComponents/pastes/VerifyPaste";
+import { UpdatePaste } from "@/rootsComponents/pastes/id/UpdatePaste";
+import { VerifyPaste } from "@/rootsComponents/pastes/id/VerifyPaste";
 
 interface PasteData {
   id: number;
@@ -9,7 +9,7 @@ interface PasteData {
   title: string;
 }
 
-const Paste = () => {
+const ViewPaste = () => {
   const [isVerified, setIsVerified] = useState(false);
   const { id, title, content, password } = useLoaderData<PasteData>();
 
@@ -27,4 +27,4 @@ const Paste = () => {
   );
 };
 
-export default Paste;
+export default ViewPaste;
