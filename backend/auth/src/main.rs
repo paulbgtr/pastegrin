@@ -11,8 +11,8 @@ async fn welcome() -> impl Responder {
     let response_message = "Welcome to pastegrin auth API!";
 
         let available_endpoints = vec![
-        "POST /auth/register",
-        "POST /auth/login",
+        "POST /auth/signup",
+        "POST /auth/signin",
         "GET /auth/me",
         "POST /auth/logout",
     ];
