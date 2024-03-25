@@ -1,5 +1,4 @@
-export class PasteDto {
-  id: number;
+export class UpdatePasteDto {
   title: string;
   content: string;
   password: string;
