@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { PastesService } from 'src/services/pastes.service';
 import { Paste } from 'src/model/paste.entity';
-import { PasteDto } from 'src/dto/paste.dto';
+import { CreatePasteDto } from 'src/dto/create-paste.dto';
 import { VerifyPasteDto } from 'src/dto/verify-paste-dto';
+import { UpdatePasteDto } from 'src/dto/update-paste.dto';
 
 @Controller()
 export class PastesController {
@@ -27,7 +28,7 @@ export class PastesController {
   }
 
   @Post('create')
-  create(@Body() createPasteDto: PasteDto): Promise<Paste> {
+  create(@Body() createPasteDto: CreatePasteDto): Promise<Paste> {
     return this.pastesService.create(createPasteDto);
   }
 
@@ -39,7 +40,7 @@ export class PastesController {
   @Put('update/:id')
   update(
     @Param('id') id: number,
-    @Body() updatePasteDto: PasteDto,
+    @Body() updatePasteDto: UpdatePasteDto,
   ): Promise<void> {
     return this.pastesService.update(id, updatePasteDto);
   }

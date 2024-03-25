@@ -2,6 +2,7 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Paste } from 'src/model/paste.entity';
+import { UpdatePasteDto } from 'src/dto/update-paste.dto';
 
 @Injectable()
 export class PastesService {
@@ -36,7 +37,7 @@ export class PastesService {
     await this.pastesRepository.delete(id);
   }
 
-  async update(id: number, paste: Paste): Promise<void> {
+  async update(id: number, paste: UpdatePasteDto): Promise<void> {
     const pasteExists = await this.pastesRepository.findOneBy({
       id,
     });
