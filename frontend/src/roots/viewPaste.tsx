@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { UpdatePaste } from "@/rootsComponents/pastes/id/UpdatePaste";
-import { VerifyPaste } from "@/rootsComponents/pastes/id/VerifyPaste";
+import { UpdatePaste } from "@/routesComponents/pastes/id/UpdatePaste";
+import { VerifyPaste } from "@/routesComponents/pastes/id/VerifyPaste";
 
 interface PasteData {
   id: number;

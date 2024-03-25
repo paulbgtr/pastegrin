@@ -1,4 +1,4 @@
-import { AddPaste } from "@/rootsComponents/pastes/new/AddPaste";
+import { AddPaste } from "@/routesComponents/pastes/new/AddPaste";
 
 const CreatePaste = () => {
   return <AddPaste />;

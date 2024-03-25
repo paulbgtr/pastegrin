@@ -8,6 +8,8 @@ import ViewPaste from "./roots/viewPaste";
 import CreatePaste from "./roots/createPaste";
 import PageNotFound from "./roots/errors/pageNotFound";
 import PasteNotFound from "./roots/errors/pasteNotFound";
+import SignIn from "./roots/signin";
+import SignUp from "./roots/signup";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
     },
     element: <ViewPaste />,
     errorElement: <PasteNotFound />,
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
 ]);
 
