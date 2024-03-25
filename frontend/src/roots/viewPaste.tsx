@@ -19,7 +19,7 @@ const ViewPaste = () => {
 
   if (!content) throw new Error("Paste not found");
 
-  if (password !== "" && !isVerified)
+  if (password && !isVerified)
     return <VerifyPaste id={id} onVerifySuccess={handleVerificationSuccess} />;
 
   return (
