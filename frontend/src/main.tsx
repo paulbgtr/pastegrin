@@ -3,13 +3,13 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Root from "./roots/root";
-import ViewPaste from "./roots/viewPaste";
-import CreatePaste from "./roots/createPaste";
-import PageNotFound from "./roots/errors/pageNotFound";
-import PasteNotFound from "./roots/errors/pasteNotFound";
-import SignIn from "./roots/signin";
-import SignUp from "./roots/signup";
+import Root from "./routes/root";
+import ViewPaste from "./routes/viewPaste";
+import CreatePaste from "./routes/createPaste";
+import PageNotFound from "./routes/errors/pageNotFound";
+import PasteNotFound from "./routes/errors/pasteNotFound";
+import SignIn from "./routes/signin";
+import SignUp from "./routes/signup";
 
 const router = createBrowserRouter([
   {
