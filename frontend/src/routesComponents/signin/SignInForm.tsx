@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -39,18 +39,25 @@ export const SignInForm = () => {
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
 
+      const { token } = await response.json();
+      localStorage.setItem("token", token);
+
       if (response.ok) setIsSignedIn(true);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) navigate("/pastes/new");
+  }, []);
 
   if (isSignedIn) {
     return (
