@@ -1,4 +1,5 @@
 import {
+  Headers,
   Controller,
   Get,
   Post,
@@ -23,8 +24,10 @@ export class PastesController {
   }
 
   @Get('get/:id')
-  findOne(@Param('id') id: number): Promise<Paste | null> {
-    return this.pastesService.findOne(id);
+  findOne(@Headers() headers, @Param('id') id: number): Promise<Paste | null> {
+    const token = headers.authorization?.split(' ')[1];
+
+    return this.pastesService.findOne(id, token);
   }
 
   @Post('create')
