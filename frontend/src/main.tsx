@@ -25,6 +25,9 @@ const router = createBrowserRouter([
     path: "/pastes/:pasteId",
     loader: async ({ request, params }) => {
       return fetch(`http://localhost:3000/pastes/get/${params.pasteId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         signal: request.signal,
       });
     },
