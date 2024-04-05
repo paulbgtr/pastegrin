@@ -31,6 +31,12 @@ async fn signup(info: web::Json<UserRequest>) -> impl Responder {
     HttpResponse::Ok().body("User created")
 }
 
+#[derive(Serialize)]
+struct SignInResponse {
+    message: String,
+    token: String,
+}
+
 #[post("/signin")]
 async fn signin(req: HttpRequest, info: web::Json<UserRequest>) -> impl Responder {
     let (email, password) = (&info.email, &info.password);
@@ -57,14 +63,12 @@ async fn signin(req: HttpRequest, info: web::Json<UserRequest>) -> impl Responde
 
     let token = helpers::generate_jwt(user.id);
 
-    let cookie = Cookie::build("token", token)
-        .http_only(true)
-        .max_age(Duration::days(1))
-        .finish();
+    let body = SignInResponse {
+        message: "User signed in".to_string(),
+        token,
+    };
 
-    HttpResponse::Ok()
-        .cookie(cookie)
-        .body("User signed in")
+    HttpResponse::Ok().json(body)
 }
 
 pub fn auth_config(cfg: &mut web::ServiceConfig) {
