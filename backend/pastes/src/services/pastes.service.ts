@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Paste } from 'src/model/paste.entity';
 import { UpdatePasteDto } from 'src/dto/update-paste.dto';
+import { decodeJwt } from 'src/utils/decodeJwt';
 
 @Injectable()
 export class PastesService {
@@ -15,8 +16,18 @@ export class PastesService {
     return this.pastesRepository.find();
   }
 
-  async findOne(id: number): Promise<Paste | null> {
+  async findOne(id: number, token?: string): Promise<Paste | null> {
     const foundPaste = await this.pastesRepository.findOneBy({ id });
+
+    const { userId } = foundPaste;
+
+    if (userId) {
+      if (!token) throw new HttpException('Token not found', 401);
+
+      const { sub } = decodeJwt(token);
+
+      if (userId !== sub) throw new HttpException('Unauthorized', 401);
+    }
 
     if (!foundPaste) throw new HttpException('Paste not found', 404);
 
