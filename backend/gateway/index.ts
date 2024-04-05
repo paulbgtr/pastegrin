@@ -1,11 +1,26 @@
 import express from "express";
 import { authProxy, pastesProxy } from "./proxy";
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+  if (req.cookies.token)
+    req.headers.authorization = `Bearer ${req.cookies.token}`;
+
+  next();
+});
+
 app.use(authProxy);
 app.use(pastesProxy);
 
