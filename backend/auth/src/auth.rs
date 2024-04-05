@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpResponse, Responder, cookie::Cookie, cookie::time::Duration};
+use actix_web::{post, web, HttpRequest, HttpResponse, Responder, cookie::Cookie, cookie::time::Duration};
 use crate::db;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -32,8 +32,12 @@ async fn signup(info: web::Json<UserRequest>) -> impl Responder {
 }
 
 #[post("/signin")]
-async fn signin(info: web::Json<UserRequest>) -> impl Responder {
+async fn signin(req: HttpRequest, info: web::Json<UserRequest>) -> impl Responder {
     let (email, password) = (&info.email, &info.password);
+
+    if let Some(token) = req.cookie("token") {
+        return HttpResponse::Ok().body("User already signed in");
+    }
 
     let conn = &mut db::establish_connection();
 
