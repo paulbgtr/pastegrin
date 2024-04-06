@@ -10,6 +10,7 @@ import PageNotFound from "./routes/errors/pageNotFound";
 import PasteNotFound from "./routes/errors/pasteNotFound";
 import SignIn from "./routes/signin";
 import SignUp from "./routes/signup";
+import { Navbar } from "./components/Navbar";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <Navbar />
     <RouterProvider router={router} />
   </React.StrictMode>
 );
