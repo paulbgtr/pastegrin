@@ -43,9 +43,9 @@ const Root = () => {
             </p>
 
             <p>
-              If you would create a new account, I will store the JWT token in
-              httpOnly cookies. This way, the token is not accessible from
-              JavaScript and it is sent with every request.
+              If you would create a new account, a JWT token will be generated
+              and stored in your browser. This token will be used to
+              authenticate you when you create a new paste.
             </p>
 
             <p>
