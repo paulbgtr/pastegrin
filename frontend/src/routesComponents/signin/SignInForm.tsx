@@ -79,6 +79,11 @@ export const SignInForm = () => {
   return (
     <div>
       <h2 className="mb-2 text-2xl font-bold text-center">Sign In</h2>
+      <a href="/signup">
+        <p className="mb-3 text-sm italic text-center text-gray-300">
+          Don't have an account?
+        </p>
+      </a>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <FormField
