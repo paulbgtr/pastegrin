@@ -1,7 +1,11 @@
+import { SignUpForm } from "@/routesComponents/signup/SignUpForm";
+
 const SignUp = () => {
   return (
-    <div>
-      <h1>Sign up</h1>
+    <div className="h-screen">
+      <div className="grid items-center justify-center w-full h-full">
+        <SignUpForm />
+      </div>
     </div>
   );
 };
