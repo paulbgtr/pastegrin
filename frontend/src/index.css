@@ -66,19 +66,8 @@
   }
 }
 
-.margins {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1280px;
-}
-
 @layer base {
   * {
     @apply border-border;
-  }
-  body {
-    @apply margins dark bg-background text-foreground;
   }
 }
