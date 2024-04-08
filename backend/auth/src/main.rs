@@ -14,7 +14,6 @@ async fn welcome() -> impl Responder {
         "POST /auth/signup",
         "POST /auth/signin",
         "GET /auth/me",
-        "POST /auth/logout",
     ];
 
     let response = format!("{}\n\nAvailable endpoints:\n{}", response_message, available_endpoints.join("\n"));
