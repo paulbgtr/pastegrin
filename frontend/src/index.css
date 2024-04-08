@@ -70,4 +70,7 @@
   * {
     @apply border-border;
   }
+  body {
+    @apply dark bg-background text-foreground;
+  }
 }
