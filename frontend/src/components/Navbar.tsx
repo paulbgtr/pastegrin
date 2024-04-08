@@ -9,11 +9,18 @@ import {
 
 export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
+    const getUsername = async () => {
+      // todo
+    };
+
     const token = localStorage.getItem("token");
 
     if (token) {
+      getUsername();
+
       setIsSignedIn(true);
       return;
     }
@@ -40,10 +47,17 @@ export const Navbar = () => {
               My Account
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Pastes</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>
+                <a href={`/user/${username}`}>Profile</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <a href="/me/pastes">Pastes</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <a href="/me/settings">Settings</a>
+              </DropdownMenuItem>
               <DropdownMenuItem
+                className="hover:cursor-pointer"
                 onClick={() => {
                   localStorage.removeItem("token");
                   window.location.href = "/signin";
