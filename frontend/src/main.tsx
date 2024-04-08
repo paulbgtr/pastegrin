@@ -10,6 +10,10 @@ import PageNotFound from "./routes/errors/pageNotFound";
 import PasteNotFound from "./routes/errors/pasteNotFound";
 import SignIn from "./routes/signin";
 import SignUp from "./routes/signup";
+import UserPastes from "./routes/userPastes";
+import MyPastes from "./routes/myPastes";
+import Settings from "./routes/settings";
+
 import { Navbar } from "./components/Navbar";
 
 const router = createBrowserRouter([
@@ -42,6 +46,18 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/user/:username",
+    element: <UserPastes />,
+  },
+  {
+    path: "/me/pastes",
+    element: <MyPastes />,
+  },
+  {
+    path: "/me/settings",
+    element: <Settings />,
   },
 ]);
 
