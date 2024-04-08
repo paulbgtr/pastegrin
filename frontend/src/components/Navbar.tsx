@@ -1,14 +1,25 @@
 import { buttonVariants } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 export const Navbar = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsSignedIn(true);
+      return;
+    }
+    setIsSignedIn(false);
+  }, []);
+
   return (
     <header className="flex items-center w-full h-20 px-4 shrink-0 md:px-6">
       <a className="hidden my-auto mr-6 lg:flex" href="/">
@@ -21,26 +32,32 @@ export const Navbar = () => {
         <a className={buttonVariants({ variant: "outline" })} href="#">
           Explore
         </a>
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            className={buttonVariants({ variant: "outline" })}
-          >
-            My Account
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Pastes</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.location.href = "/signin";
-              }}
+        {isSignedIn ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={buttonVariants({ variant: "outline" })}
             >
-              Sign Out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              My Account
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Pastes</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.href = "/signin";
+                }}
+              >
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <a className={buttonVariants({ variant: "outline" })} href="/signin">
+            Sign In
+          </a>
+        )}
       </nav>
     </header>
   );
