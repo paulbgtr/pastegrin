@@ -14,21 +14,20 @@ export const Navbar = () => {
       <a className="hidden my-auto mr-6 lg:flex" href="/">
         <span className="text-xl font-bold">pg.</span>
       </a>
-      <nav className="hidden gap-6 ml-auto lg:flex">
+      <nav className="hidden gap-3 ml-auto lg:flex">
         <a className={buttonVariants({ variant: "outline" })} href="#">
           New Paste
         </a>
-        <a
-          className={buttonVariants({ variant: "outline" })}
-          href="https://github.com/paulbgtr/pastegrin"
-        >
-          Github
+        <a className={buttonVariants({ variant: "outline" })} href="#">
+          Explore
         </a>
         <DropdownMenu>
-          <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            className={buttonVariants({ variant: "outline" })}
+          >
+            My Account
+          </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Pastes</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
