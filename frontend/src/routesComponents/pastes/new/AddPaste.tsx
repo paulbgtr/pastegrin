@@ -46,6 +46,8 @@ export const AddPaste = () => {
       });
       const data = await response.json();
 
+      if (!response.ok) throw new Error(data.message);
+
       navigate(`/pastes/${data.id}`);
     } catch (error) {
       console.error("Error:", error);
