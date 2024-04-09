@@ -14,14 +14,14 @@ pub fn establish_connection() -> PgConnection {
         .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
-pub fn get_user_by_id(conn: &mut PgConnection, _id: i32) -> User {
+pub fn get_user_by_id(conn: &mut PgConnection, _id: i32) -> Option<User> {
     let result = users
         .filter(id.eq(_id))
         .select(User::as_select())
         .load(conn)
         .expect("Error loading user");
 
-    result.into_iter().next().unwrap()
+    result.into_iter().next()
 }
 
 pub fn get_user_by_email(conn: &mut PgConnection, _email: &str) -> Option<User> {

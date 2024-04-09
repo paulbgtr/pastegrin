@@ -93,6 +93,10 @@ async fn me(req: HttpRequest) -> impl Responder {
 
     let user = db::get_user_by_id(conn, additional_data.user_id);
 
+    if user.is_none() {
+        return HttpResponse::NotFound().body("User not found");
+    }
+
     HttpResponse::Ok().json(user)
 }
 
