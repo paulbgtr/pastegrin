@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpRequest, HttpResponse, Responder, cookie::Cookie, cookie::time::Duration};
+use actix_web::{get, post, web, HttpRequest, HttpResponse, Responder, cookie::Cookie, cookie::time::Duration};
 use crate::db;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -71,8 +71,36 @@ async fn signin(req: HttpRequest, info: web::Json<UserRequest>) -> impl Responde
     HttpResponse::Ok().json(body)
 }
 
+#[get("/me")]
+async fn me(req: HttpRequest) -> impl Responder {
+    let headers = req.headers();
+    let token_opt = headers.get("Authorization");
+
+    if token_opt.is_none() {
+        return HttpResponse::Unauthorized().body("No token is provided");
+    }
+
+    let token_str = match token_opt.unwrap().to_str() {
+        Ok(token) => token,
+        Err(_) => return HttpResponse::BadRequest().body("Failed to convert token to string"),
+    };
+
+    let additional_data = match helpers::verify_jwt(token_str) {
+        Ok(data) => data,
+        Err(_) => return HttpResponse::BadRequest().body("Failed to verify token"),
+
+    };
+
+    let conn = &mut db::establish_connection();
+
+    let user = db::get_user_by_id(conn, additional_data.user_id);
+
+    HttpResponse::Ok().json(user)
+}
+
 pub fn auth_config(cfg: &mut web::ServiceConfig) {
     cfg
     .service(signin)
-    .service(signup);
+    .service(signup)
+    .service(me);
 }
