@@ -1,7 +1,5 @@
-use actix_web::{get, post, web, HttpRequest, HttpResponse, Responder, cookie::Cookie, cookie::time::Duration};
+use actix_web::{get, post, web, HttpRequest, HttpResponse, Responder};
 use crate::db;
-use serde::Deserialize;
-use std::collections::HashMap;
 use bcrypt::{DEFAULT_COST, hash, verify};
 use jwt_simple::prelude::*;
 use crate::helpers;
