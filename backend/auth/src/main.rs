@@ -5,6 +5,7 @@ mod helpers;
 mod db;
 mod models;
 mod schema;
+mod users;
 
 #[get("/")]
 async fn welcome() -> impl Responder {
@@ -26,6 +27,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .configure(auth::auth_config)
+            .configure(users::users_config)
             .service(welcome)
     })
     .bind(("127.0.0.1", 8080))?
