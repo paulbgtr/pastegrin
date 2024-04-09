@@ -2,8 +2,8 @@ use jwt_simple::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
-struct AdditionalData {
-    user_id: i32,
+pub struct AdditionalData {
+    pub user_id: i32,
 }
 
 const KEY: &str = "secret";
@@ -18,4 +18,12 @@ pub fn generate_jwt(user_id: i32) -> String {
     let token = key.authenticate(claims).unwrap();
 
     token
+}
+
+pub fn verify_jwt(token: &str) -> Result<AdditionalData, Box<dyn std::error::Error>> {
+    let verifier = HS256Key::from_bytes(KEY.as_bytes());
+
+    let claims = verifier.verify_token::<AdditionalData>(token, None)?;
+
+    Ok(claims.custom)
 }
