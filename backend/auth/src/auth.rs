@@ -79,7 +79,13 @@ async fn me(req: HttpRequest) -> impl Responder {
     }
 
     let token_str = match token_opt.unwrap().to_str() {
-        Ok(token) => token,
+        Ok(token) => {
+            let parts: Vec<&str> = token.split_whitespace().collect();
+            if parts.len() != 2 {
+                return HttpResponse::BadRequest().body("Invalid token format");
+            }
+            parts[1]
+        },
         Err(_) => return HttpResponse::BadRequest().body("Failed to convert token to string"),
     };
 
