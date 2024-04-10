@@ -1,5 +1,6 @@
 use actix_web::{HttpResponse, put, delete, web, Responder};
 use serde::Deserialize;
+use bcrypt::{DEFAULT_COST, hash, verify};
 use crate::db;
 
 #[delete("/users/{id}")]
@@ -15,16 +16,27 @@ async fn delete(path: web::Path<i32>) -> impl Responder {
 
 #[derive(Deserialize)]
 struct UserRequest {
-    email: String,
-    new_password: String,
-    old_password: String,
+    email: Option<String>,
+    new_password: Option<String>,
+    old_password: Option<String>,
 }
 
 #[put("/users/{id}")]
 async fn update(path: web::Path<i32>, info: web::Json<UserRequest>) -> impl Responder {
-    let user_id = path.into_inner();    
+    let (email, new_password, old_password) = (&info.email, &info.new_password, &info.old_password);
 
-    let user = db::get_user_by_id(&mut db::establish_connection(), user_id);
+     if email.is_none() && new_password.is_none() {
+        return HttpResponse::BadRequest().body("Email or new password must be provided");
+     }
+
+     if new_password.is_some() && old_password.is_none() {
+        return HttpResponse::BadRequest().body("Old password must be provided");
+     }
+
+    let id = path.into_inner();
+
+    let conn = &mut db::establish_connection();
+    let user = db::get_user_by_id(conn, id);
 
     if user.is_none() {
         return HttpResponse::NotFound().body("User not found");
@@ -32,15 +44,25 @@ async fn update(path: web::Path<i32>, info: web::Json<UserRequest>) -> impl Resp
 
     let user = user.unwrap();
 
-    if user.password != info.old_password {
+    if email.is_some() {
+        let email = email.as_ref().unwrap();
+
+        let user = db::update_user_email(conn, id, email);
+
+        return HttpResponse::Ok().body("User updated");
+    }
+
+    let old_password = old_password.as_ref().unwrap();
+    let is_valid_password = verify(old_password, &user.password).expect("Failed to verify password");
+
+    if !is_valid_password {
         return HttpResponse::Unauthorized().body("Invalid password");
     }
 
-    let (email, new_password) = (&info.email, &info.new_password);
+    let new_password = new_password.as_ref().unwrap();
+    let hashed_password = hash(new_password, DEFAULT_COST).expect("Failed to hash password");
 
-    let conn = &mut db::establish_connection();
-
-    db::update_user(conn, user_id, email, new_password);
+    let user = db::update_user_password(conn, id, &hashed_password);
 
     HttpResponse::Ok().body("User updated")
 }
