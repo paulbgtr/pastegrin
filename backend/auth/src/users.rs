@@ -46,10 +46,7 @@ async fn update(path: web::Path<i32>, info: web::Json<UserRequest>) -> impl Resp
 
     if email.is_some() {
         let email = email.as_ref().unwrap();
-
         let user = db::update_user_email(conn, id, email);
-
-        return HttpResponse::Ok().body("User updated");
     }
 
     let old_password = old_password.as_ref().unwrap();
