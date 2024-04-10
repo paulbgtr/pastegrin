@@ -46,9 +46,16 @@ pub fn create_user(conn: &mut PgConnection, _email: &str, _password: &str) -> Us
         .expect("Error saving new user")
 }
 
-pub fn update_user(conn: &mut PgConnection, _id: i32, _email: &str, _password: &str) -> User {
+pub fn update_user_email(conn: &mut PgConnection, _id: i32, _email: &str) -> User {
     diesel::update(users.find(_id))
-        .set((email.eq(_email), password.eq(_password)))
+        .set(email.eq(_email))
+        .get_result(conn)
+        .expect("Error updating user")
+}
+
+pub fn update_user_password(conn: &mut PgConnection, _id: i32, _password: &str) -> User {
+    diesel::update(users.find(_id))
+        .set(password.eq(_password))
         .get_result(conn)
         .expect("Error updating user")
 }
