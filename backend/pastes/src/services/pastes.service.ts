@@ -16,26 +16,21 @@ export class PastesService {
     return this.pastesRepository.find();
   }
 
-  async findOne(id: number, token?: string): Promise<Paste | null> {
+  async findOne(id: number): Promise<Paste | null> {
     const foundPaste = await this.pastesRepository.findOneBy({ id });
-
-    const { userId } = foundPaste;
-
-    if (userId) {
-      if (!token) throw new HttpException('Token not found', 401);
-
-      const { sub } = decodeJwt(token);
-
-      if (userId !== sub) throw new HttpException('Unauthorized', 401);
-    }
-
     if (!foundPaste) throw new HttpException('Paste not found', 404);
 
     return foundPaste;
   }
 
-  async create(paste: Paste): Promise<Paste> {
-    return this.pastesRepository.save(paste);
+  async create(paste: Paste, token?: string): Promise<Paste> {
+    if (token) {
+      const { user_id: userId } = decodeJwt(token);
+      paste.userId = userId;
+    }
+    const newPaste = await this.pastesRepository.save(paste);
+
+    return newPaste;
   }
 
   async remove(id: number): Promise<void> {

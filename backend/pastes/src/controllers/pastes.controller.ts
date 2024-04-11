@@ -24,15 +24,18 @@ export class PastesController {
   }
 
   @Get('get/:id')
-  findOne(@Headers() headers, @Param('id') id: number): Promise<Paste | null> {
-    const token = headers.authorization?.split(' ')[1];
-
-    return this.pastesService.findOne(id, token);
+  findOne(@Param('id') id: number): Promise<Paste | null> {
+    return this.pastesService.findOne(id);
   }
 
   @Post('create')
-  create(@Body() createPasteDto: CreatePasteDto): Promise<Paste> {
-    return this.pastesService.create(createPasteDto);
+  create(
+    @Headers() headers,
+    @Body() createPasteDto: CreatePasteDto,
+  ): Promise<Paste> {
+    const token = headers.authorization?.split(' ')[1];
+
+    return this.pastesService.create(createPasteDto, token);
   }
 
   @Delete('delete/:id')
