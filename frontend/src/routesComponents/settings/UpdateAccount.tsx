@@ -65,9 +65,10 @@ export const UpdateAccount = ({ user }: { user: User }) => {
 
   return (
     <div>
+      <h2 className="mb-1 font-bold">Update Account</h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-          <div className="grid space-y-3 md:max-w-xl">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-3 md:max-w-xl">
             <FormField
               control={form.control}
               name="email"
