@@ -30,6 +30,14 @@ export class PastesController {
     return this.pastesService.findOne(id, token);
   }
 
+  @Get('get/user')
+  findUserPastes(@Headers() headers): Promise<Paste[]> {
+    const token = headers.authorization?.split(' ')[1];
+    if (!token) throw new Error('Token not found');
+
+    return this.pastesService.findUserPastes(token);
+  }
+
   @Post('create')
   create(@Body() createPasteDto: CreatePasteDto): Promise<Paste> {
     return this.pastesService.create(createPasteDto);

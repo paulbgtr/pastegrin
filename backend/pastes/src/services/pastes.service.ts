@@ -34,6 +34,15 @@ export class PastesService {
     return foundPaste;
   }
 
+  async findUserPastes(token: string): Promise<Paste[]> {
+    const { sub: userId } = decodeJwt(token);
+    return this.pastesRepository.find({
+      where: {
+        userId,
+      },
+    });
+  }
+
   async create(paste: Paste): Promise<Paste> {
     return this.pastesRepository.save(paste);
   }
