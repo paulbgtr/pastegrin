@@ -29,10 +29,10 @@ export const Navbar = () => {
 
   return (
     <header className="flex items-center w-full h-20 px-4 shrink-0 md:px-6">
-      <a className="hidden my-auto mr-6 lg:flex" href="/">
+      <a className="my-auto mr-6 lg:flex" href="/">
         <span className="text-xl font-bold">pg.</span>
       </a>
-      <nav className="hidden gap-3 ml-auto lg:flex">
+      <nav className="flex gap-3 ml-auto">
         <a className={buttonVariants({ variant: "outline" })} href="#">
           New Paste
         </a>
