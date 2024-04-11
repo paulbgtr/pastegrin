@@ -53,6 +53,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/me/pastes",
+    loader: async ({ request }) => {
+      return fetch("http://localhost:3000/pastes/user", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        signal: request.signal,
+      });
+    },
     element: <MyPastes />,
   },
   {
