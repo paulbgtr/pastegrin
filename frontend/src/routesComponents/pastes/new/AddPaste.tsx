@@ -36,11 +36,14 @@ export const AddPaste = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const apiUrl = "http://localhost:3000/pastes/create";
 
+    const token = localStorage.getItem("token") ?? "";
+
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });
