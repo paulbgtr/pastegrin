@@ -34,15 +34,6 @@ export class PastesService {
     return foundPaste;
   }
 
-  async findUserPastes(token: string): Promise<Paste[]> {
-    const { sub: userId } = decodeJwt(token);
-    return this.pastesRepository.find({
-      where: {
-        userId,
-      },
-    });
-  }
-
   async create(paste: Paste): Promise<Paste> {
     return this.pastesRepository.save(paste);
   }
@@ -76,5 +67,17 @@ export class PastesService {
       throw new HttpException('Invalid password', 400);
 
     return true;
+  }
+
+  async findUserPastes(token: string): Promise<Paste[]> {
+    const { user_id: userId } = decodeJwt(token);
+
+    const foundPastes = await this.pastesRepository.find({
+      where: {
+        userId,
+      },
+    });
+
+    return foundPastes;
   }
 }
