@@ -1,18 +1,10 @@
-import { SinglePaste } from "@/components/SinglePaste";
 import { useLoaderData } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
-
-type Paste = {
-  id: number;
-  title: string;
-  content: string;
-  isPrivate: boolean;
-};
+import type { Paste } from "@/types/Paste";
+import { PastesList } from "@/components/PastesList";
 
 const MyPastes = () => {
   const pastes = useLoaderData() as Paste[];
-
-  console.log(pastes);
 
   return (
     <div>
@@ -29,18 +21,7 @@ const MyPastes = () => {
           </a>
         </>
       ) : (
-        <div className="grid gap-3 lg:grid-cols-4 xl:grid-cols-5 md:grid-cols-3">
-          {pastes.map((p: Paste) => {
-            return (
-              <SinglePaste
-                key={p.id}
-                title={p.title}
-                content={p.content}
-                isPrivate={p.isPrivate}
-              />
-            );
-          })}
-        </div>
+        <PastesList pastes={pastes} />
       )}
     </div>
   );
