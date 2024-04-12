@@ -16,6 +16,14 @@ export class PastesService {
     return this.pastesRepository.find();
   }
 
+  findPublicPastes(): Promise<Paste[]> {
+    return this.pastesRepository.find({
+      where: {
+        password: null || '',
+      },
+    });
+  }
+
   async findOne(id: number): Promise<Paste | null> {
     const foundPaste = await this.pastesRepository.findOneBy({ id });
     if (!foundPaste) throw new HttpException('Paste not found', 404);

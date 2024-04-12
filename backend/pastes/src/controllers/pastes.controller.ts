@@ -23,6 +23,11 @@ export class PastesController {
     return this.pastesService.findAll();
   }
 
+  @Get('get/public')
+  findPublicPastes(): Promise<Paste[]> {
+    return this.pastesService.findPublicPastes();
+  }
+
   @Get('get/:id')
   findOne(@Param('id') id: number): Promise<Paste | null> {
     return this.pastesService.findOne(id);
