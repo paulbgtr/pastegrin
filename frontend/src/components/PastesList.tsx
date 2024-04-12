@@ -7,6 +7,7 @@ export const PastesList = ({ pastes }: { pastes: Paste[] }) => {
       {pastes.map((p: Paste) => {
         return (
           <SinglePaste
+            id={p.id}
             key={p.id}
             title={p.title}
             content={p.content}
