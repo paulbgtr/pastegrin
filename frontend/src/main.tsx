@@ -13,6 +13,7 @@ import SignUp from "./routes/signup";
 import UserPastes from "./routes/userPastes";
 import MyPastes from "./routes/myPastes";
 import Settings from "./routes/settings";
+import PublicPastes from "./routes/publicPastes";
 
 import { Navbar } from "./components/Navbar";
 
@@ -25,6 +26,15 @@ const router = createBrowserRouter([
   {
     path: "/pastes/new",
     element: <CreatePaste />,
+  },
+  {
+    path: "/pastes",
+    loader: async ({ request }) => {
+      return fetch("http://localhost:3000/pastes/get/public", {
+        signal: request.signal,
+      });
+    },
+    element: <PublicPastes />,
   },
   {
     path: "/pastes/:pasteId",
