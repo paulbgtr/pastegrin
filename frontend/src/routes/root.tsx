@@ -52,9 +52,23 @@ const Root = () => {
               If you don't want to create an account, you can still create
               pastes, but they will be deleted after 24 hours.
             </p>
+
             <p>
               Also, please set a password for your paste. This way, only people
               with the password can view the paste.
+            </p>
+
+            <p>
+              If a user has access to a paste, they can view it, edit it, and
+              delete it. If you don't want to share your paste with others,
+              don't share the link and set a password for it. Otherwise, anyone
+              could go to the /pastes page and view all publicly available
+              pastes.
+            </p>
+
+            <p>
+              Create, share, and have fun! This is why the internet was created
+              for.
             </p>
           </div>
         </div>
