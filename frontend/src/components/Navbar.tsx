@@ -33,10 +33,13 @@ export const Navbar = () => {
         <span className="text-xl font-bold">pg.</span>
       </a>
       <nav className="flex gap-3 ml-auto">
-        <a className={buttonVariants({ variant: "outline" })} href="#">
+        <a
+          className={buttonVariants({ variant: "outline" })}
+          href="/pastes/new"
+        >
           New Paste
         </a>
-        <a className={buttonVariants({ variant: "outline" })} href="#">
+        <a className={buttonVariants({ variant: "outline" })} href="/pastes">
           Explore
         </a>
         {isSignedIn ? (
